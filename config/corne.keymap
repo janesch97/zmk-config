@@ -80,6 +80,7 @@
       bindings = <&bt BT_CLR>;
       key-positions = <0 38 5>;
     };
+  };
 
   conditional_layers {
     compatible = "zmk,conditional-layers";
