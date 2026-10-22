@@ -9,6 +9,30 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    behaviors {
+        hml: hml {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HML";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            hold-trigger-key-positions = <14 15 16 13 14 15 16>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
+        };
+
+        hmr: hmr {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMR";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "tap-preferred";
+            hold-trigger-key-positions = <19 20 21 22>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -22,10 +46,20 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp TAB        &kp Q  &kp W  &kp E  &kp R     &kp T        &kp Y    &kp U          &kp I      &kp O    &kp P     &kp MINUS
-&kp GRAVE      &kp A  &kp S  &kp D  &kp F     &kp G        &kp H    &kp J          &kp K      &kp L    &kp SEMI  &kp SQT
-&kp BACKSLASH  &kp Z  &kp X  &kp C  &kp V     &kp B        &kp N    &kp M          &kp COMMA  &kp DOT  &kp FSLH  &kp EQUAL
-                             &mo 1  &kp LGUI  &kp SPACE    &kp RET  &kp BACKSPACE  &mo 2
+&kp TAB        &kp Q                &kp W          &kp E        &kp R            &kp T        &kp Y    &kp U             &kp I        &kp O          &kp P            &kp MINUS
+&kp GRAVE      &hml LEFT_CONTROL A  &hml LSHIFT S  &hml D LGUI  &hml LEFT_ALT F  &kp G        &kp H    &hmr RIGHT_ALT J  &hmr RGUI K  &hmr RSHIFT L  &hmr SEMI RCTRL  &kp SQT
+&kp BACKSLASH  &kp Z                &kp X          &kp C        &kp V            &kp B        &kp N    &kp M             &kp COMMA    &kp DOT        &kp FSLH         &kp EQUAL
+                                                   &mo 2        &kp LGUI         &kp SPACE    &kp RET  &kp BACKSPACE     &mo 3
+            >;
+        };
+
+        numbers_layer {
+            label = "NUM";
+            bindings = <
+&kp TILDE  &kp N1     &kp N2    &kp N3     &kp N4     &kp N5       &kp N6     &kp N7    &kp N8     &kp N9    &kp N0    &kp BSPC
+&kp LCTRL  &kp EXCL   &kp AT    &kp HASH   &kp DLLR   &kp PRCNT    &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR  &kp RPAR  &kp GRAVE
+&kp LSHFT  &kp EQUAL  &kp PLUS  &kp MINUS  &kp UNDER  &kp QMARK    &kp LBKT   &kp RBKT  &kp LBRC   &kp RBRC  &kp BSLH  &kp PIPE
+                                &kp LGUI   &trans     &kp SPACE    &kp RET    &trans    &kp RALT
             >;
         };
 
@@ -94,8 +128,8 @@
         compatible = "zmk,conditional-layers";
 
         activate_func_layer {
-            if-layers = <1 2>;
-            then-layer = <3>;
+            if-layers = <2 3>;
+            then-layer = <4>;
         };
     };
 };
